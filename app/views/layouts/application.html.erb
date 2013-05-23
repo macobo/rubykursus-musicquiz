@@ -7,22 +7,29 @@
   <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body ng-controller="MainCtrl">
   <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
         <a class="brand" href="#">MusicQuiz</a>
-        <% if current_user %>
-          Signed in as <strong><%= current_user.name %></strong>!
-          <%= link_to "Sign out", signout_path, id: "sign_out" %>
-        <% else %>
-          <%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %>
-        <% end %>
+
       </div>
     </div>
   </div>
 
-  <%= yield %>
+  <div id="main-container" class="container">
+    <div id="logininfo">
+      <div ng-show="session.isLoggedIn()" class="pull-right">
+        Signed in as <strong>{{ session.getUser().name }}</strong>!
+        <a ng-click="session.logout()">Sign out</a>
+      </div>
+      <div ng-hide="session.isLoggedIn()">
+        <a ng-click="session.login()">Sign in with Facebook</a>
+      </div>
+    </div>
+    <div ng-view>
+    </div>
+  </div>
 
   <script src="http://connect.facebook.net/en_US/all.js"></script>
   <script>

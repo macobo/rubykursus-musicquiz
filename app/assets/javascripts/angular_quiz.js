@@ -9,16 +9,9 @@ app.factory('Quiz', function($resource) {
     return Quiz;
 });
 
-app.controller("MainCtrl", function($scope, $http) {
-    $scope.sign_in = function() {
-        FB.login(function(response) {
-            console.log(response);
-            $http.post("/auth/facebook/callback", 
-                response.authResponse, function(resp) {
-                    console.log(resp);
-            });
-        });
-    };
+app.controller("MainCtrl", function($scope, session, $http) {
+    $scope.session = session;
+    session.getStatus();
 });
 
 app.controller("QuizCtrl", function($scope) {
