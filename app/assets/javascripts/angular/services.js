@@ -56,3 +56,12 @@ app.factory("session", function($q, $http) {
         getUser: function() { return user; }
     };
 });
+
+app.factory('Quiz', function($resource) {
+    var Quiz = $resource('/api/quizzes/:id', {id: '@id'});
+    Quiz.question = $resource(
+        '/api/quizzes/:quiz_id/questions/:id', 
+        {quiz_id: '@id', id: '@id'}
+    );
+    return Quiz;
+});

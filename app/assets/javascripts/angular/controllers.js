@@ -1,3 +1,8 @@
+app.controller("MainCtrl", function($scope, session, $http) {
+    $scope.session = session;
+    session.getStatus();
+});
+
 app.controller("ListQuizCtrl", function($scope, Quiz) {
     $scope.quizzes = Quiz.query();
 });
