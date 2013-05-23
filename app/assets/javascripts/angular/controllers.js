@@ -8,9 +8,7 @@ app.controller("EditQuizCtrl", function($scope, $routeParams, $location, Quiz) {
         Quiz.get({id: $routeParams.id}, function(quiz){
             self.original = quiz;
             $scope.quiz = new Quiz(quiz);
-            $scope.questions = Quiz.question.query({quiz_id: quiz.id}, function() {
-                console.log($scope.questions);
-            });
+            $scope.questions = Quiz.question.query({quiz_id: quiz.id});
         });
     } else {
         self.original = new Quiz();
@@ -42,15 +40,16 @@ app.controller("EditQuestionCtrl", function($scope, $routeParams, $location, Qui
 
     self.original = new Quiz.question();
     $scope.question = new Quiz.question({
-        question_data: { type: $scope.options[0] }
+        data: { type: $scope.options[0] }
     });
-    $scope.data = $scope.question.question_data;
+    $scope.data = $scope.question.data;
 
     if ($routeParams.id) {
-        Quiz.questions.get({id: $routeParams.id, quiz_id: $routeParams.quiz_id}, 
+        Quiz.question.get({id: $routeParams.id, quiz_id: $routeParams.quiz_id}, 
             function(question){
                 self.original = question;
                 $scope.question = new Quiz.question(question);
+                $scope.data = $scope.data = $scope.question.data;
             });
     }
 
@@ -75,7 +74,7 @@ app.controller("EditQuestionCtrl", function($scope, $routeParams, $location, Qui
 
     $scope.addOption = function() {
         $scope.data.options || ($scope.data.options = []);
-        $scope.data.options.push("");
+        $scope.data.options.push({});
     }
 
     $scope.remove = function(index, array) {
