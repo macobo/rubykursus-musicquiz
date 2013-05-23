@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="MusicQuiz">
 <head>
   <title>AngularMusicquiz</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
@@ -8,14 +8,18 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-  <div id="user_nav">
-    <% if current_user %>
-      Signed in as <strong><%= current_user.name %></strong>!
-      <%= link_to "Sign out", signout_path, id: "sign_out" %>
-    <% else %>
-      <%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %>
-    <% end %>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="brand" href="#">MusicQuiz</a>
+        <% if current_user %>
+          Signed in as <strong><%= current_user.name %></strong>!
+          <%= link_to "Sign out", signout_path, id: "sign_out" %>
+        <% else %>
+          <%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %>
+        <% end %>
+      </div>
+    </div>
   </div>
 
   <%= yield %>

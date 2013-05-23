@@ -1,0 +1,14 @@
+<div class="content-toolbar">
+  <progressbar done="status.question" total="status.totalQuestions"></progressbar>
+</div>
+<div class="content-wrapper">
+  <div class="content">
+    <div>
+      <h2>{{quiz.question}}</h2>
+      <div ng-repeat="option in quiz.options">
+        <input type="radio" value="{{option}}" ng-model="$parent.quiz.guess"/>{{option}}
+      </div>
+      <pre>form = {{quiz | json}}</pre>
+    </div>
+  </div>
+</div>

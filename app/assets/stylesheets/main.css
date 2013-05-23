@@ -1,0 +1,67 @@
+body {
+    background-color: #BDE;
+}
+
+h3 {
+    line-height: 30px;
+}
+
+#main-container {
+    margin-top: 4em;
+    background-color: #F2F2F2;
+    border: 1px solid #7DA7B4;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    background-image: -webkit-linear-gradient(top, #EFEFEF, #E9E9E9);
+
+}
+
+.content-toolbar {
+    margin: 24px 25px;
+}
+
+.content {
+    background-color: #FFF;
+    padding: 20px 20px;
+}
+
+/* Player status bar */
+.progressbar {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    overflow: hidden;
+    display: inline-block;
+    background-color: #D5D5D5;
+    background-repeat: no-repeat;
+    background-image: -webkit-linear-gradient(#B5B5B5, #D5D5D5 25%, #D5D5D5);
+    border: 1px solid #B6B6B6;
+    box-shadow: 0 1px 0 white;
+}
+.progressbar li {
+    border-right: 1px solid #B6B6B6;
+    float: left;
+    height: 13px;
+    padding: 0px;
+    width: 14px;
+    margin-top: 0px;
+}
+
+.progressbar li:first-child.done {
+    margin-left: -1px;
+    border-left: 1px solid #5F9500;
+}
+.progressbar li.done {
+    margin: -1px 0px;
+    border: 1px solid #5F9500;
+    border-left: none;
+    background-color: #6FAE05;
+    background-repeat: repeat-x;
+    background-image: -webkit-linear-gradient(top, #87C620, #6FAE05);
+    background-image: linear-gradient(top, #87C620, #6FAE05);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}

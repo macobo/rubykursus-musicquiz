@@ -1,0 +1,30 @@
+angular.module('MusicQuiz').config(function($routeProvider) {
+    $routeProvider.
+        when("/", {
+            controller: "", 
+            templateUrl:'/templates/quiz.html'
+        }).
+        when("/crud", {
+            controller: "ListQuizCtrl",
+            templateUrl:'/templates/crud.html'
+        }).
+        when("/crud/new_quiz", {
+            controller: "EditQuizCtrl",
+            templateUrl:'/templates/edit_quiz.html'
+        }).
+        when("/crud/:id", {
+            controller: "EditQuizCtrl",
+            templateUrl:'/templates/edit_quiz.html'
+        }).
+        when("/crud/:quiz_id/new_question", {
+            controller: "EditQuestionCtrl",
+            templateUrl:'/templates/edit_question.html'
+        }).
+        when("/crud/:quiz_id/question/:id", {
+            controller: "EditQuestionCtrl",
+            templateUrl:'/templates/edit_question.html'
+        }).
+        otherwise({
+            redirectTo:'/'
+        });
+});

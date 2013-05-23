@@ -10,4 +10,8 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require_tree .
+//= require angular
+//= require angular-resource
+//= require angular_quiz
+//= require routes
+//= require_tree ./angular
