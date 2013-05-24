@@ -57,14 +57,27 @@ app.factory("session", function($q, $http) {
     };
 });
 
-app.factory('Quiz', function($resource) {
+app.factory('Quiz', function($resource, $http) {
     var Quiz = $resource('/api/quizzes/:id', {id: '@id'});
     Quiz.question = $resource(
         '/api/quizzes/:quiz_id/questions/:id', 
         {quiz_id: '@id', id: '@id'}
     );
+    Quiz.solver = {
+        get: function(rp) {
+            return $http.get('/api/play/'+rp.id);
+        },
+        create: function(rp) {
+            return $http.post('/api/play', rp);
+        },
+        submit: function(rp, data) {
+            return $http.post('/api/play/'+rp.id+'/answer', data)
+        }
+    }
+
     return Quiz;
 });
+
 
 
 /*

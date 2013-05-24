@@ -4,11 +4,11 @@ angular.module('MusicQuiz').config(function($routeProvider) {
             controller: "ListQuizCtrl", 
             templateUrl: '/templates/play_index.html'
         }).
-        when("/play/:quiz_id/start", {
+        when("/play/start/:quiz_id", {
             controller: "QuizCtrl",
             templateUrl: '/templates/quiz_start.html'
         }).
-        when("/play/:quiz_id", {
+        when("/play/:id", {
             controller: "QuizCtrl",
             templateUrl: '/templates/quiz.html'
         }).

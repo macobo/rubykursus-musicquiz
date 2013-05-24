@@ -12,6 +12,7 @@
 //
 //= require angular
 //= require angular-resource
+//= require underscore-min
 //= require angular_quiz
 //= require routes
 //= require_tree ./angular

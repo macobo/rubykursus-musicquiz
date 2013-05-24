@@ -1,0 +1,8 @@
+<h1>{{question.question}}</h1>
+
+<div class="options">
+  <checkbox ng-repeat="option in question.options" answer="question.user_answer[$index]">
+  </checkbox>
+</div>
+
+<span class="question lighter">Check the correct answer(s).</span>

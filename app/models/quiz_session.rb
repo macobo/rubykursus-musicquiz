@@ -24,7 +24,8 @@ class QuizSession < ActiveRecord::Base
     quiz.questions[index].data
   end
 
-  def get_answer i
+  def get_answer i=nil
+    i ||= answers_given.size - 1
     index = questions[i]
     print index, quiz.questions[index].nil?
     quiz.questions[index].answer
@@ -41,7 +42,6 @@ class QuizSession < ActiveRecord::Base
     result.merge({
       :question_count => quiz.questions.length,
       :correct_answers => correct_answers,
-      :quiz_id => quiz.id,
       :quiz => quiz
     })
   end

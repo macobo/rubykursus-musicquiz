@@ -4,15 +4,46 @@ app.controller("MainCtrl", function($scope, session, $http) {
 });
 
 
-app.controller("QuizCtrl", function($scope, $routeParams, $http, $location, Quiz) {
-    $scope.quiz = Quiz.get({id: $routeParams.quiz_id});
+app.controller("QuizCtrl", function($scope, $routeParams, $location, $route, Quiz) {
+    if ($routeParams.quiz_id) {
+        $scope.quiz = Quiz.get({id: $routeParams.quiz_id});
+    } else {
+        Quiz.solver.get($routeParams).then(function(response) {
+            $scope.quiz = response.data.quiz;
+            $scope.question = response.data.question;
+        });
+    }
+    $scope.debug = false;
 
     $scope.start = function() {
-        $http.post("/api/play/", $routeParams).
-            then(function(){ 
-                $location.path('/play/'+$routeParams.quiz_id);
+        Quiz.solver.create($routeParams).
+            then(function(response){
+                var id = response.data.id;
+                $location.path('/play/'+id);
+            });
+    };
+
+    var userAnswer = function() {
+        var answer = [];
+        if ($scope.question.type == "Multiple choice") {
+            _.each($scope.question.options, function(option) {
+                if (option.checked) answer.push(option.value)
+            });
+        }
+        return answer.join(", ");
+    }
+
+    $scope.checkAnswer = function() {
+        $scope.checked = true;
+        $scope.user_answer = userAnswer();
+        Quiz.solver.submit($routeParams, {answer: $scope.user_answer}).
+            then(function(response) {
+                $scope.answer = response.data.expected_answer;
             });
     }
+
+    $scope.route = $route;
+
 });
 
 
