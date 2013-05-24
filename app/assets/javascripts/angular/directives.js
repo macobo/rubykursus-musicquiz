@@ -13,22 +13,3 @@ app.directive("progressbar", function() {
         }
     }
 });
-
-app.directive("quiz", function() {
-    return {
-        restrict: 'E',
-        transclude: true
-    }
-});
-
-app.directive("options", function() {
-    return {
-        restrict: 'E',
-        replace: true,
-        scope: { from: '@', model: '=' },
-        template: '' +
-            '<div ng-repeat="option in from">' +
-                
-            '</div>' 
-    }
-})

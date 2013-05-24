@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  quiz: 
+  user: 
+  questions: MyString
+  answers_given: MyString
+  finished: false
+
+two:
+  quiz: 
+  user: 
+  questions: MyString
+  answers_given: MyString
+  finished: false

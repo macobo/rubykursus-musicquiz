@@ -3,16 +3,25 @@ app.controller("MainCtrl", function($scope, session, $http) {
     session.getStatus();
 });
 
+
+app.controller("QuizCtrl", function($scope, $routeParams, Quiz) {
+    var Quiz = Quiz.get($routeParams);
+});
+
+
+// CRUD stuff
+
 app.controller("ListQuizCtrl", function($scope, Quiz) {
     $scope.quizzes = Quiz.query();
 });
 
+
 app.controller("EditQuizCtrl", function($scope, $routeParams, $location, Quiz) {
     var self = this;
     if ($routeParams.id) {
-        Quiz.get({id: $routeParams.id}, function(quiz){
+        Quiz.get($routeParams, function(quiz){
             self.original = quiz;
-            $scope.quiz = new Quiz(quiz);
+            $scope.quiz = angular.copy(quiz);
             $scope.questions = Quiz.question.query({quiz_id: quiz.id});
         });
     } else {
@@ -38,24 +47,24 @@ app.controller("EditQuizCtrl", function($scope, $routeParams, $location, Quiz) {
     };
 });
 
+
 app.controller("EditQuestionCtrl", function($scope, $routeParams, $location, Quiz) {
     var self = this;
     $scope.quiz_id = $routeParams.quiz_id;
     $scope.options = ["Multiple choice", "Word answer"];
 
-    self.original = new Quiz.question();
-    $scope.question = new Quiz.question({
-        data: { type: $scope.options[0] }
-    });
-    $scope.data = $scope.question.data;
-
     if ($routeParams.id) {
-        Quiz.question.get({id: $routeParams.id, quiz_id: $routeParams.quiz_id}, 
-            function(question){
-                self.original = question;
-                $scope.question = new Quiz.question(question);
-                $scope.data = $scope.data = $scope.question.data;
-            });
+        Quiz.question.get($routeParams, function(question){
+            self.original = question;
+            $scope.question = angular.copy(question);
+            $scope.data = $scope.data = $scope.question.data;
+        });
+    } else {
+        $scope.question = new Quiz.question({
+            data: { type: $scope.options[0] }
+        });
+        self.original = angular.copy($scope.question);
+        $scope.data = $scope.question.data;
     }
 
     $scope.isClean = function() {
@@ -73,7 +82,7 @@ app.controller("EditQuestionCtrl", function($scope, $routeParams, $location, Qui
             $scope.question.answer = $scope.question.answer.join(", ");
         self.original = $scope.question;
         $scope.question.$save({quiz_id: $routeParams.quiz_id}, function() {
-            $location.path('/crud/'+$routeParams.quiz_id);
+            $location.path('/crud/{{$routeParams.quiz_id}}');
         });
     };
 

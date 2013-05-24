@@ -65,3 +65,31 @@ app.factory('Quiz', function($resource) {
     );
     return Quiz;
 });
+
+
+/*
+
+    function Quiz() {
+        this.routeParams = $routeParams;
+        this.resource = $resource('/api/quizzes/:id', {id: '@id'});
+    }
+    
+    Quiz.prototype.call = function(method_name) {
+        // calls the method_name (eg. "$get"), returns a promise
+        var deferred = $q.defer();
+        this.resource[method_name]($routeParams, function(response) {
+            deferred.resolve(response);
+        });
+        return deferred.promise;
+    };
+
+    function Question() {
+        this.routeParams = $routeParams;
+        this.resource = $resource('/api/quizzes/:quiz_id/questions/:id',
+                            {quiz_id: '@id', id: '@id'});
+    }
+    Question.prototype.call = Quiz.prototype.call;
+
+    Quiz.question = Question;
+
+*/
