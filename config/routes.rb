@@ -4,19 +4,26 @@ AngularMusicquiz::Application.routes.draw do
   match 'signout', to: 'sessions#destroy', as: 'signout'
   match 'loginstatus', to: 'sessions#index'
 
-  scope "/api/quizzes" do
-    get    "/"    => 'quiz#index',  format: 'json'
-    post   "/"    => 'quiz#create', format: 'json'
-    get    "/:id" => 'quiz#show',   format: 'json'
-    post   "/:id" => 'quiz#update', format: 'json'
-    delete "/:id" => 'quiz#destroy',format: 'json'
-    
-    scope  "/:quiz_id/questions" do
-      get    "/"    => 'question#index',  format: 'json'
-      post   "/"    => 'question#create', format: 'json'
-      get    "/:id" => 'question#show',   format: 'json'
-      post   "/:id" => 'question#update', format: 'json'
-      delete "/:id" => 'question#destroy',format: 'json'
+  scope "/api" do
+    scope "/play" do
+      post   "/"    => 'quiz_session#new',  format: 'json' 
+      get    "/:id" => 'quiz_session#show', format: 'json'
+      post   "/:id/answer" => 'quiz_session#answer', format: 'json'
+    end
+    scope "/quizzes" do
+      get    "/"    => 'quiz#index',  format: 'json'
+      post   "/"    => 'quiz#create', format: 'json'
+      get    "/:id" => 'quiz#show',   format: 'json'
+      post   "/:id" => 'quiz#update', format: 'json'
+      delete "/:id" => 'quiz#destroy',format: 'json'
+      
+      scope  "/:quiz_id/questions" do
+        get    "/"    => 'question#index',  format: 'json'
+        post   "/"    => 'question#create', format: 'json'
+        get    "/:id" => 'question#show',   format: 'json'
+        post   "/:id" => 'question#update', format: 'json'
+        delete "/:id" => 'question#destroy',format: 'json'
+      end
     end
   end
 

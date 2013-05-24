@@ -4,8 +4,15 @@ app.controller("MainCtrl", function($scope, session, $http) {
 });
 
 
-app.controller("QuizCtrl", function($scope, $routeParams, Quiz) {
-    var Quiz = Quiz.get($routeParams);
+app.controller("QuizCtrl", function($scope, $routeParams, $http, $location, Quiz) {
+    $scope.quiz = Quiz.get({id: $routeParams.quiz_id});
+
+    $scope.start = function() {
+        $http.post("/api/play/", $routeParams).
+            then(function(){ 
+                $location.path('/play/'+$routeParams.quiz_id);
+            });
+    }
 });
 
 
@@ -73,7 +80,7 @@ app.controller("EditQuestionCtrl", function($scope, $routeParams, $location, Qui
 
     $scope.destroy = function() {
         self.original.$delete(function() {
-            $location.path('/crud/{{$routeParams.quiz_id}}');
+            $location.path('/crud/'+$routeParams.quiz_id);
         });
     };
 
@@ -82,7 +89,7 @@ app.controller("EditQuestionCtrl", function($scope, $routeParams, $location, Qui
             $scope.question.answer = $scope.question.answer.join(", ");
         self.original = $scope.question;
         $scope.question.$save({quiz_id: $routeParams.quiz_id}, function() {
-            $location.path('/crud/{{$routeParams.quiz_id}}');
+            $location.path('/crud/'+$routeParams.quiz_id);
         });
     };
 

@@ -1,0 +1,14 @@
+<div class="content-toolbar">
+  <input type="text" ng-model="search" class="search-query pull-right" placeholder="Search">
+  <h3>Quiz: {{ quiz.name }}</h3>
+</div>
+
+<div class="content-wrapper">
+  <div class="content">
+    <p>Quiz summary: {{ quiz.summary }}</p>
+    <p>Questions: {{ quiz.question_count }}</p>
+    <p>Do you wish to start this quiz?</p>
+    <button ng-click="start()"class="btn btn-success btn-large">Start</button>
+    <a href="#/" class="btn">Back</a>
+  </div>
+</div>

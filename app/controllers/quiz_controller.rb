@@ -1,6 +1,6 @@
 class QuizController < ApplicationController
 
-    before_filter :authorization_required
+    before_filter :authorization_required, :except => [:index, :show]
     
     def from_params
         # take the needed args for a constructor
@@ -41,5 +41,6 @@ class QuizController < ApplicationController
     def destroy
         @quiz = Quiz.find(params[:id])
         @quiz.destroy
+        render json: {}
     end
 end

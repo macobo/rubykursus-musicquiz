@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+  #protect_from_forgery
 
   private
 
@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authorization_required
+    puts "auth_req",  session, current_user.nil?
     if current_user.nil?
       render json: {:logged_in => false}
     end
