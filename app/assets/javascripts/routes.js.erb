@@ -1,3 +1,9 @@
+var require_authentication = { 
+    authenticated: function(authFilter) {
+        return authFilter();
+    } 
+}
+
 angular.module('MusicQuiz').config(function($routeProvider) {
     $routeProvider.
         when("/", {
@@ -18,23 +24,28 @@ angular.module('MusicQuiz').config(function($routeProvider) {
         }).
         when("/crud", {
             controller: "ListQuizCtrl",
-            templateUrl:'/templates/crud.html'
+            templateUrl:'/templates/crud.html',
+            resolve: require_authentication
         }).
         when("/crud/new_quiz", {
             controller: "EditQuizCtrl",
-            templateUrl:'/templates/edit_quiz.html'
+            templateUrl:'/templates/edit_quiz.html',
+            resolve: require_authentication
         }).
         when("/crud/:id", {
             controller: "EditQuizCtrl",
-            templateUrl:'/templates/edit_quiz.html'
+            templateUrl:'/templates/edit_quiz.html',
+            resolve: require_authentication
         }).
         when("/crud/:quiz_id/new_question", {
             controller: "EditQuestionCtrl",
-            templateUrl:'/templates/edit_question.html'
+            templateUrl:'/templates/edit_question.html',
+            resolve: require_authentication
         }).
         when("/crud/:quiz_id/question/:id", {
             controller: "EditQuestionCtrl",
-            templateUrl:'/templates/edit_question.html'
+            templateUrl:'/templates/edit_question.html',
+            resolve: require_authentication
         }).
         otherwise({
             redirectTo:'/'
