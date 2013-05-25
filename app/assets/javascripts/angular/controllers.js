@@ -11,9 +11,17 @@ app.controller("QuizCtrl", function($scope, $routeParams, $location, $route, Qui
         Quiz.solver.get($routeParams).then(function(response) {
             $scope.quiz = response.data.quiz;
             $scope.question = response.data.question;
+            if ($scope.quiz.answers_given.length == $scope.quiz.question_count) {
+                $location.path('/play/'+$routeParams.id+'/finish');
+            }
         });
     }
     $scope.debug = false;
+
+    $scope.correctCount = function() {
+        if ($scope.quiz)
+            return _.filter($scope.quiz.correct_answers, _.identity).length;
+    }
 
     $scope.start = function() {
         Quiz.solver.create($routeParams).
@@ -30,6 +38,7 @@ app.controller("QuizCtrl", function($scope, $routeParams, $location, $route, Qui
                 if (option.checked) answer.push(option.value)
             });
         }
+        answer.sort();
         return answer.join(", ");
     }
 
@@ -116,8 +125,10 @@ app.controller("EditQuestionCtrl", function($scope, $routeParams, $location, Qui
     };
 
     $scope.save = function() {
-        if ($scope.question.answer instanceof Array)
+        if ($scope.question.answer instanceof Array) {
+            $scope.question.answer.sort();
             $scope.question.answer = $scope.question.answer.join(", ");
+        }
         self.original = $scope.question;
         $scope.question.$save({quiz_id: $routeParams.quiz_id}, function() {
             $location.path('/crud/'+$routeParams.quiz_id);

@@ -18,21 +18,37 @@ class QuizSession < ActiveRecord::Base
     q_session
   end
 
+  def give_answer answer 
+    answers_given.push(answer)
+    if answers_given == questions.size
+      finished = true
+    end
+    save!
+  end
+
   def get_question i=nil
-    i ||= answers_given.size - 1
-    index = questions[i]
-    quiz.questions[index].data
+    if i.nil?
+      i = answers_given.size
+    end
+    if i < questions.size
+      index = questions[i]
+      quiz.questions[index].data
+    end
   end
 
   def get_answer i=nil
-    i ||= answers_given.size - 1
+    if i.nil?
+      i = answers_given.size
+    end
     index = questions[i]
-    print index, quiz.questions[index].nil?
     quiz.questions[index].answer
   end
 
   def correct_answers
-    questions.zip(answers_given).map { |q, given_answer|
+    n = answers_given.size
+    (0..n-1).zip(answers_given).map { |q, given_answer|
+      puts({ :given => given_answer, :q => q, 
+        :answer => get_answer(q), :result => get_answer(q) == given_answer})
       get_answer(q) == given_answer
     }
   end

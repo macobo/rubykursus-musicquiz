@@ -11,8 +11,8 @@ class QuizSessionController < ApplicationController
   def answer
     @q_session = QuizSession.find params[:id]
     expected_answer = @q_session.get_answer
-    @q_session.answers_given.push(params[:answer])
-    @q_session.save!
+    @q_session.give_answer params[:answer]
+    
     render json: {
       :quiz => @q_session, 
       :question => @q_session.get_question,

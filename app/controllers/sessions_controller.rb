@@ -1,6 +1,5 @@
 class SessionsController < ApplicationController
   def index
-    puts "index", session
     user = User.find(session[:user_id])
     render json: user
   end
@@ -8,7 +7,6 @@ class SessionsController < ApplicationController
   def create
     user = User.from_omniauth(env["omniauth.auth"])
     session[:user_id] = user.id
-    puts "create", session
     render json: {:user => user, :logged_in => true}
   end
 

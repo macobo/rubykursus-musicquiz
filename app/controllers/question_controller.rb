@@ -32,12 +32,14 @@ class QuestionController < ApplicationController
         end
     end
 
-    # PUT /quizzes/1/questions/1
+    # POST /quizzes/1/questions/1
     def update
         @question = quiz.questions.find(params[:id])
 
-        if !@question.update_attributes(from_params)
-            render json: @question.errors, status: :unprocessable_entity 
+        if @question.update_attributes(from_params)
+            render json: @question
+        else
+            render json: @question.errors, status: :unprocessable_entity
         end
     end
 
@@ -45,5 +47,6 @@ class QuestionController < ApplicationController
     def destroy
         @question = quiz.questions.find(params[:id])
         @question.destroy
+        render json: {}
     end
 end

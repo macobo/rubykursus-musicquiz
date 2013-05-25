@@ -12,6 +12,10 @@ angular.module('MusicQuiz').config(function($routeProvider) {
             controller: "QuizCtrl",
             templateUrl: '/templates/quiz.html'
         }).
+        when("/play/:id/finish", {
+            controller: "QuizCtrl",
+            templateUrl: '/templates/quiz_finish.html'
+        }).
         when("/crud", {
             controller: "ListQuizCtrl",
             templateUrl:'/templates/crud.html'

@@ -5,15 +5,12 @@
 <div class="content-wrapper">
   <div class="content">
     <p>Quiz summary: {{ quiz.summary }}</p>
-    <p>Questions: {{ quiz.question_count }}</p>
-    <p>Do you wish to start this quiz?</p>
-
+    <p>You got {{ correctCount() }} out of {{ quiz.question_count}} questions right!</p>
   </div>
 </div>
 
 <div class="content-toolbar">
   <div class="clearfix">
-    <button ng-click="start()"class="btn btn-success btn-large pull-right">Start</button>
-    <a href="#/" class="btn p">Back</a>
+    <a href="#/" class="btn p">Back home</a>
   </div>
 </div>
