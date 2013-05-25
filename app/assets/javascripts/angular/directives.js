@@ -31,6 +31,41 @@ app.directive("question", function() {
     };
 });
 
+app.directive("location", function($location) {
+    var linker = function(scope, element) {
+        
+        var updateLocation = function() {
+            var pattern = new RegExp('^' + scope.path + '$', ['i']);
+            scope.active = pattern.test($location.path())
+        }
+        updateLocation();
+        scope.$watch(function() { 
+            return $location.path(); 
+        }, updateLocation);
+    };
+    return {
+        restrict: "E",
+        transclude: true,
+        replace: true,
+        template: '<li ng-class="{active: active}"><a href="#{{path}}" ng-transclude></a></li>',
+        scope: { path: "@", name: "@" },
+        link: linker
+    }
+});
+
+app.directive("loggedin", function(session) {
+    return {
+        restrict: 'A',
+        replace: true,
+        link: function(scope, element) {
+            var update = function() {
+                element.css("display", session.isLoggedIn() ? '' : 'none');
+            }
+            scope.$watch(session.isLoggedIn, update)
+        }
+    };
+});
+
 app.directive("checkbox", function() {
     return {
         restrict: 'E',

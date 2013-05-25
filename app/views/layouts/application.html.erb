@@ -12,21 +12,26 @@
     <div class="navbar-inner">
       <div class="container">
         <a class="brand" href="#">MusicQuiz</a>
-
+        <ul class="nav">
+          <location path="/">Home</location>
+          <location path="/crud" loggedin>CRUD</location>
+        </ul>
+        <ul class="nav pull-right">
+          <li>
+            <div ng-show="session.isLoggedIn()" class="navbar-text">
+              Signed in as <strong>{{ session.getUser().name }}</strong>!
+              <a ng-click="session.logout()">Sign out</a>
+            </div>
+            <div ng-hide="session.isLoggedIn()" class="navbar-text">
+              <a ng-click="session.login()">Sign in with Facebook</a>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
 
   <div id="main-container" class="container">
-    <div id="logininfo">
-      <div ng-show="session.isLoggedIn()" class="pull-right">
-        Signed in as <strong>{{ session.getUser().name }}</strong>!
-        <a ng-click="session.logout()">Sign out</a>
-      </div>
-      <div ng-hide="session.isLoggedIn()">
-        <a ng-click="session.login()">Sign in with Facebook</a>
-      </div>
-    </div>
     <div ng-view>
     </div>
   </div>

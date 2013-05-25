@@ -10,7 +10,7 @@ class QuizController < ApplicationController
     # GET /quizzes
     def index
         @quizzes = Quiz.all
-        render json: @quizzes
+        render json: @quizzes.as_json(:user => current_user)
     end
 
     # GET /quizzes/1

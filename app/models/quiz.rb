@@ -9,10 +9,11 @@ class Quiz < ActiveRecord::Base
     questions.size
   end
 
-  def as_json(user=nil, options={})
+  def as_json(options={})
+    puts options
     result = super(options)
     result.merge({:question_count => question_count,
-                  :user_status => user_status(user) })
+                  :user_status => user_status(options[:user]) })
   end
 
   private
@@ -21,13 +22,13 @@ class Quiz < ActiveRecord::Base
     if user.nil?
       return :not_started
     end
-    with_user = quiz_sessions.where(:user => user)
-    unless with_user
+    with_user = quiz_sessions.where(:user_id => user.id)
+    puts({:awith_user => with_user.empty?, :user => user})
+    if with_user.empty?
       :not_started
     else
       solved = with_user.where(:finished => true)
-      solved ? :finished : :started
+      solved.empty? ? :started : :finished
     end
-    
   end
 end

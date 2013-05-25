@@ -1,7 +1,7 @@
 class QuizSession < ActiveRecord::Base
   belongs_to :quiz
   belongs_to :user
-  attr_accessible :answers_given, :finished, :questions
+  attr_accessible :answers_given, :finished, :questions, :user
 
   serialize :answers_given, JSON
   serialize :questions, JSON
@@ -20,9 +20,7 @@ class QuizSession < ActiveRecord::Base
 
   def give_answer answer 
     answers_given.push(answer)
-    if answers_given == questions.size
-      finished = true
-    end
+    self.finished = answers_given.size == questions.size
     save!
   end
 
@@ -47,8 +45,6 @@ class QuizSession < ActiveRecord::Base
   def correct_answers
     n = answers_given.size
     (0..n-1).zip(answers_given).map { |q, given_answer|
-      puts({ :given => given_answer, :q => q, 
-        :answer => get_answer(q), :result => get_answer(q) == given_answer})
       get_answer(q) == given_answer
     }
   end
