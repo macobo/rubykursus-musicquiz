@@ -1,7 +1,11 @@
 class SessionsController < ApplicationController
   def index
-    user = User.find(session[:user_id])
-    render json: user
+    if session[:user_id]
+      user = User.find(session[:user_id])
+      render json: {:user => user, :logged_in => true}
+    else
+      render json: {:logged_in => false}
+    end
   end
 
   def create

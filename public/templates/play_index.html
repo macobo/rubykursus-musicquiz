@@ -15,7 +15,10 @@
       <tr ng-repeat="quiz in quizzes | filter: search">
         <td>{{$index+1}}</td>
         <td class="bolded">
-          <a href="#/play/start/{{quiz.id}}">{{quiz.name}}</a>
+          <a href="#/play/start/{{quiz.id}}">
+            <i class="icon-ok green" ng-show="quiz.user_status == 'finished'"></i>
+            {{quiz.name}}
+          </a>
         </td>
         <td>{{quiz.summary}}</td>
         <td>{{quiz.question_count}}</td>

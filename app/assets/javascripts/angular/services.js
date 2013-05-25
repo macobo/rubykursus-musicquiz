@@ -26,8 +26,13 @@ app.factory("session", function($q, $http) {
         $http.get("/loginstatus").
             success(function(data) {
                 console.log("got status", data);
-                user = data;
-                deferred.resolve(data);
+                if (data.logged_in) {
+                    user = data.user;
+                    deferred.resolve(data);
+                } else {
+                    user = null;
+                    deferred.reject(data);
+                }
             }).error(function(data) {
                 console.log("didn't get status");
                 user = null;

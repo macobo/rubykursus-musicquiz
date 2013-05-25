@@ -1,3 +1,8 @@
+<div class="content-toolbar">
+  <h3 ng-show="question.id">Editing quiz/{{quiz_id}}/question/{{question.id}}</h3>
+  <h3 ng-hide="question.id">Create a new question for quiz/{{quiz_id}}</h3>
+</div>
+
 <div class="content-wrapper">
   <div class="content">
     <form name="form">
@@ -39,14 +44,16 @@
         </div>
       </div>
 
-      </br>
-      <a href="#/crud/{{quiz_id}}" class="btn">Back</a>
-      <button ng-click="save()" ng-disabled="isClean() || form.$invalid"
-              class="btn btn-primary">Save</button>
-      <button ng-click="destroy()"
-              ng-show="question.id" class="btn btn-danger">Delete</button>
-
       <pre>{{ question || json }}</pre>
+     
     </form>
   </div>
+</div>
+
+<div class="content-toolbar clearfix">
+  <a href="#/crud/{{quiz_id}}" class="btn">Back</a>
+  <button ng-click="save()" ng-disabled="isClean() || form.$invalid"
+          class="btn btn-primary">Save</button>
+  <button ng-click="destroy()"
+          ng-show="question.id" class="btn btn-danger">Delete</button>
 </div>
