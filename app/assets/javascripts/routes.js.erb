@@ -1,7 +1,5 @@
-var require_authentication = { 
-    authenticated: function(authFilter) {
-        return authFilter();
-    } 
+var require_authentication =  function(authFilter) {
+    return authFilter();
 }
 
 angular.module('MusicQuiz').config(function($routeProvider) {
@@ -25,27 +23,47 @@ angular.module('MusicQuiz').config(function($routeProvider) {
         when("/crud", {
             controller: "ListQuizCtrl",
             templateUrl:'/templates/crud.html',
-            resolve: require_authentication
+            resolve: { authenticated: require_authentication }
         }).
         when("/crud/new_quiz", {
             controller: "EditQuizCtrl",
             templateUrl:'/templates/edit_quiz.html',
-            resolve: require_authentication
+            resolve: { authenticated: require_authentication }
         }).
         when("/crud/:id", {
             controller: "EditQuizCtrl",
             templateUrl:'/templates/edit_quiz.html',
-            resolve: require_authentication
+            resolve: { authenticated: require_authentication }
         }).
         when("/crud/:quiz_id/new_question", {
             controller: "EditQuestionCtrl",
             templateUrl:'/templates/edit_question.html',
-            resolve: require_authentication
+            resolve: { 
+                authenticated: require_authentication,
+                question: function($route, Quiz) {
+                    return new Quiz.question({
+                        answer: "",
+                        quiz_id: $route.current.params.quiz_id,
+                        data: { options: [{}] }
+                    });
+                }
+            }
         }).
         when("/crud/:quiz_id/question/:id", {
             controller: "EditQuestionCtrl",
             templateUrl:'/templates/edit_question.html',
-            resolve: require_authentication
+            resolve: {
+                authenticated: require_authentication,
+                question: function($q, $route, Quiz) {
+                    var deferred = $q.defer();
+                    var params = $route.current.params; 
+                    
+                    Quiz.question.get(params, function(question){
+                        deferred.resolve(question);
+                    });
+                    return deferred.promise;
+                }
+            }
         }).
         otherwise({
             redirectTo:'/'

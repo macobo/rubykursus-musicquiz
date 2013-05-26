@@ -64,7 +64,6 @@ app.controller("ListQuizCtrl", function($scope, Quiz) {
 
 
 app.controller("EditQuizCtrl", function($scope, $routeParams, $location, Quiz) {
-    var self = this;
     if ($routeParams.id) {
         Quiz.get($routeParams, function(quiz){
             self.original = quiz;
@@ -95,49 +94,50 @@ app.controller("EditQuizCtrl", function($scope, $routeParams, $location, Quiz) {
 });
 
 
-app.controller("EditQuestionCtrl", function($scope, $routeParams, $location, Quiz) {
-    var self = this;
-    $scope.quiz_id = $routeParams.quiz_id;
-    $scope.options = ["Multiple choice", "Word answer"];
+app.controller("EditQuestionCtrl", function($scope, $location, question) {
+    $scope.optionTypes = ["Multiple choice", "Word answer"];
 
-    if ($routeParams.id) {
-        Quiz.question.get($routeParams, function(question){
-            self.original = question;
-            $scope.question = angular.copy(question);
-            $scope.data = $scope.data = $scope.question.data;
+    $scope.question = question;
+    if (!_.has(question.data, "type"))
+        question.data.type = $scope.optionTypes[0];
+
+    var original = angular.copy(question);
+
+    var ans_array = $scope.question.answer.split(", ");
+    $scope.options = _.map(question.data.options, function(o) {
+        return {value: o.value, checked: _.contains(ans_array, o.value)};
+    });
+
+    $scope.$watch("options", function() {
+        var answer = [];
+        $scope.question.data.options = _.map($scope.options, function(o) {
+            if (o.checked) answer.push(o.value);
+            return { value: o.value };
         });
-    } else {
-        $scope.question = new Quiz.question({
-            data: { type: $scope.options[0] }
-        });
-        self.original = angular.copy($scope.question);
-        $scope.data = $scope.question.data;
-    }
+        answer.sort();
+        $scope.question.answer = answer.join(", ");
+    }, true);
 
     $scope.isClean = function() {
-        return angular.equals(self.original, $scope.question);
+        return angular.equals(original, $scope.question);
     }
 
     $scope.destroy = function() {
-        self.original.$delete(function() {
-            $location.path('/crud/'+$routeParams.quiz_id);
+        original.$delete(function() {
+            $location.path('/crud/'+question.quiz_id);
         });
     };
 
     $scope.save = function() {
-        if ($scope.question.answer instanceof Array) {
-            $scope.question.answer.sort();
-            $scope.question.answer = $scope.question.answer.join(", ");
-        }
-        self.original = $scope.question;
-        $scope.question.$save({quiz_id: $routeParams.quiz_id}, function() {
-            $location.path('/crud/'+$routeParams.quiz_id);
+        original = $scope.question;
+        question.$save({quiz_id: question.quiz_id}, function() {
+            $location.path('/crud/'+question.quiz_id);
         });
     };
 
     $scope.addOption = function() {
-        $scope.data.options || ($scope.data.options = []);
-        $scope.data.options.push({});
+        $scope.options || ($scope.options = []);
+        $scope.options.push({});
     }
 
     $scope.remove = function(index, array) {
