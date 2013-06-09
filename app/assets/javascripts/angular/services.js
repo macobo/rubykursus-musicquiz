@@ -1,4 +1,4 @@
-app.factory("session", function($q, $http) {
+app.factory("session", function($q, $rootScope, $http) {
     var user = null;
     var fbPromise = function(method_name) {
         console.log("FB_called", method_name);
@@ -6,6 +6,9 @@ app.factory("session", function($q, $http) {
         FB[method_name](function(response) {
             deferred.resolve(response);
             console.log("FB_resolved", method_name, response, deferred);
+            // since this might not get immediate response, enter
+            // into a new digest cycle to continue processing.
+            if(!$rootScope.$$phase) $rootScope.$apply();
         });
         return deferred.promise;
     };
