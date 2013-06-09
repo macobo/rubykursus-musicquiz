@@ -10,7 +10,7 @@ class Quiz < ActiveRecord::Base
   end
 
   def as_json(options={})
-    puts options
+    #puts options
     result = super(options)
     result.merge({:question_count => question_count,
                   :user_status => user_status(options[:user]) })
@@ -23,7 +23,7 @@ class Quiz < ActiveRecord::Base
       return :not_started
     end
     with_user = quiz_sessions.where(:user_id => user.id)
-    puts({:awith_user => with_user.empty?, :user => user})
+    #puts({:awith_user => with_user.empty?, :user => user})
     if with_user.empty?
       :not_started
     else
