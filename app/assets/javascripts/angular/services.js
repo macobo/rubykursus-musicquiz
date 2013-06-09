@@ -5,7 +5,7 @@ app.factory("session", function($q, $rootScope, $http) {
         var deferred = $q.defer();
         FB[method_name](function(response) {
             deferred.resolve(response);
-            console.log("FB_resolved", method_name, response, deferred);
+            console.log("FB_resolved", method_name, response);
             // since this might not get immediate response, enter
             // into a new digest cycle to continue processing.
             if(!$rootScope.$$phase) $rootScope.$apply();
@@ -45,8 +45,7 @@ app.factory("session", function($q, $rootScope, $http) {
     };
 
     var logout = function() {
-        fbPromise("getLoginStatus").
-            then(fbPromise("logout")).
+        fbPromise("logout").
             then(function() { window.location = '/signout' });
     };
 
