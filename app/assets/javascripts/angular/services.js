@@ -46,13 +46,7 @@ app.factory("session", function($q, $rootScope, $http) {
 
     var logout = function() {
         fbPromise("getLoginStatus").
-            then(function(response) {
-                if (response.status == "connected") 
-                    return;
-                console.log("logging out", response)
-                return fbPromise("logout");
-                //return $q.all([fbPromise("logout"), $http.get('/signout')]);
-            }).
+            then(fbPromise("logout")).
             then(function() { window.location = '/signout' });
     };
 
