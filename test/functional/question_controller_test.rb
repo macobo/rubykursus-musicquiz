@@ -9,6 +9,12 @@ class QuestionControllerTest < ActionController::TestCase
     session[:user_id] = @user.id
   end
 
+  test "auth_filter" do
+    session[:user_id] = nil
+    get :index, :quiz_id => @quiz.id
+    assert_equal response.body, "{\"logged_in\":false}"
+  end
+
   test "valid quiz question index" do 
     get :index, :quiz_id => @quiz.id
     assert_response :success
