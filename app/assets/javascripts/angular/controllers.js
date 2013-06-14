@@ -95,7 +95,10 @@ app.controller("EditQuizCtrl", function($scope, $routeParams, $location, Quiz) {
 
 
 app.controller("EditQuestionCtrl", function($scope, $location, question) {
-    $scope.optionTypes = ["Multiple choice", "Word answer"];
+    $scope.optionTypes = [
+        "Multiple choice"
+        //"Word answer"
+    ];
 
     $scope.question = question;
     if (!_.has(question.data, "type"))

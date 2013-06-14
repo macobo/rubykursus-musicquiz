@@ -35,6 +35,7 @@ class QuizController < ApplicationController
         if !@quiz.update_attributes(from_params)
             render json: @quiz.errors, status: :unprocessable_entity 
         end
+        render json: {}
     end
 
     # DELETE /quizzes/1
