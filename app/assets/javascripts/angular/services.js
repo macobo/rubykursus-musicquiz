@@ -17,10 +17,20 @@ app.factory("session", function($q, $rootScope, $http) {
         var auth_callback = function() {
             console.log("auth_callback");
             return $http.get('/auth/facebook/callback');
-        }
+        };
         fbPromise("login").
+            then(checkFBStatus).
             then(auth_callback).
             then(getStatus);
+    };
+
+    var checkFBStatus = function(response) {
+      var deferred = $q.defer();
+      if (response.authResponse !== null)
+        deferred.resolve(response);
+      else
+        deferred.reject(response);
+      return deferred.promise;
     };
 
     var getStatus = function() {
