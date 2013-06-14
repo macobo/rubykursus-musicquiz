@@ -17,6 +17,7 @@ gem 'seed_dump'
 gem 'jquery-rails'
 gem "omniauth-facebook", '=1.4.0'
 gem 'pg'
+gem 'factory_girl_rails'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
