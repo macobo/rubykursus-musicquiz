@@ -123,10 +123,10 @@ app.controller("EditQuestionCtrl", function($scope, $location, question) {
 
     $scope.isClean = function() {
         return angular.equals(original, $scope.question);
-    }
+    };
 
     $scope.destroy = function() {
-        original.$delete(function() {
+        original.$delete({quiz_id: question.quiz_id, id: question.id}, function() {
             $location.path('/crud/'+question.quiz_id);
         });
     };
