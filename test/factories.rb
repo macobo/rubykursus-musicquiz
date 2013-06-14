@@ -9,4 +9,8 @@ FactoryGirl.define do
     answer  'This is true'
     data    '{"type":"Multiple choice","question":"Q2","options":[{"value":"This is false"},{"value":"This is true!"}]}'
   end
+
+  factory :user do
+
+  end
 end

@@ -13,11 +13,13 @@ gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) support
 gem "twitter-bootstrap-rails"
 gem 'devise'
 gem 'omniauth'
-gem 'seed_dump'
 gem 'jquery-rails'
 gem "omniauth-facebook", '=1.4.0'
 gem 'pg'
-gem 'factory_girl_rails'
+group :development, :test do
+  gem 'factory_girl_rails'
+  gem 'seed_dump'
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
